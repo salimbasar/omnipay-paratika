@@ -68,18 +68,18 @@ abstract class AbstractPayment extends AbstractRequest
 
         $data = array();
 
-        // Api bilgileri
+        // Api bilgileri - Api Informations
         $data['ACTION']                 = $this->actionType;
         $data['MERCHANTUSER']           = $this->getMerchantUser();
         $data['MERCHANTPASSWORD']       = $this->getMerchantPassword();
         $data['MERCHANT']               = $this->getMerchant();
 
-        // Sipariş bilgileri
+        // Sipariş bilgileri - Order Informations
         $data['MERCHANTPAYMENTID']      = $this->getOrderId();
         $data['AMOUNT']                 = $this->getAmount();
         $data['CURRENCY']               = $this->getCurrency();
 
-        // Müşteri bilgileri
+        // Müşteri bilgileri - Customer Informations
         $data['CUSTOMER']               = "Musteri-". $this->getCard()->getFirstName() . " " . $this->getCard()->getLastName();
         $data['CUSTOMERNAME']           = $this->getCard()->getFirstName() . " " . $this->getCard()->getLastName();
         $data['CUSTOMEREMAIL']          = $this->getCard()->getEmail();
@@ -88,29 +88,29 @@ abstract class AbstractPayment extends AbstractRequest
         $data['NAMEONCARD']             = $this->getCard()->getFirstName() . " " . $this->getCard()->getLastName();
         $data['CUSTOMERPHONE']          = $this->getCard()->getBillingPhone();
 
-        // Fatura bilgileri
+        // Fatura bilgileri - Invoice Informations
         $data['BILLTOADDRESSLINE']      = $this->getCard()->getBillingAddress1() . ' '. $this->getCard()->getBillingAddress2();
         $data['BILLTOCITY']             = $this->getCard()->getBillingCity();
         $data['BILLTOCOUNTRY']          = $this->getCard()->getBillingCountry();
         $data['BILLTOPOSTALCODE']       = $this->getCard()->getBillingPostcode();
         $data['BILLTOPHONE']            = $this->getCard()->getBillingPhone();
 
-        // Nakliye bilgileri
+        // Nakliye bilgileri - Shipping Informations
         $data['SHIPTOADDRESSLINE']      = $this->getCard()->getShippingAddress1() . ' '. $this->getCard()->getShippingAddress2();
         $data['SHIPTOCITY']             = $this->getCard()->getShippingCity();
         $data['SHIPTOCOUNTRY']          = $this->getCard()->getShippingCountry();
         $data['SHIPTOPOSTALCODE']       = $this->getCard()->getShippingPostcode();
         $data['SHIPTOPHONE']            = $this->getCard()->getShippingPhone();
 
-        // Api ve oturum açmak için
+        // Api ve oturum açmak için - For Api and opening a session
         // Kredi kartı bilgileri
         $data['CARDPAN']                = $this->getCard()->getNumber();
         $data['CARDEXPIRY']             = $this->getCard()->getExpiryDate('m') . '.'. $this->getCard()->getExpiryDate('Y');
         $data['CARDCVV']                = $this->getCard()->getCvv();
         $data['PAYMENTSYSTEM']          = $this->getBank();
 
-        // MOTO/3D için
-        // Kredi kartı bilgileri
+        // MOTO/3D için - for MOTO/3D
+        // Kredi kartı bilgileri - Credit Card Informations
         $data['cardOwner']              = $this->getCard()->getFirstName() . " " . $this->getCard()->getLastName();
         $data['pan']                    = $this->getCard()->getNumber();
         $data['expiryYear']             = $this->getCard()->getExpiryDate('Y');
@@ -141,7 +141,7 @@ abstract class AbstractPayment extends AbstractRequest
         }
 
         /*
-         Paratika için hash parametreleri
+         Paratika için hash parametreleri - Hash Parameters for Paratika
 
          HASH = HEX ( SHA-256 ( CONCAT ( [ACTION], [MERCHANT], [CUSTOMER], 
                 [MERCHANTPAYMENTID], [MERCHANTSECRETKEY], [RANDOM] ) ) )
